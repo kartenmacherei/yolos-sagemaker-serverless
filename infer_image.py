@@ -68,7 +68,7 @@ if __name__ == "__main__":
     boto3_sess = boto3.Session(profile_name=os.environ.get["SAGEMAKER_PROFILE"])
     sagemaker_session = sagemaker.Session(boto_session=boto3_sess)
 
-    image_path = "src/example_resized.jpg"
+    image_path = "example_resized.jpg"
     predictor = get_predictor(sagemaker_session)
 
     res = infer_image(image_path, predictor)
