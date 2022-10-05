@@ -1,0 +1,6 @@
+sagemaker
+boto3
+pillow
+torch
+matplotlib
+transformers
