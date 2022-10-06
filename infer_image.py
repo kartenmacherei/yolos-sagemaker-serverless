@@ -1,3 +1,8 @@
+"""
+This module's purpose is to send image data to a serverless SageMaker endpoint and
+visualize the results.
+"""
+
 import boto3
 import matplotlib.pyplot as plt
 import numpy
@@ -36,16 +41,6 @@ def plot_results(pil_img, prob, boxes):
     plt.savefig("example.png")
 
 
-def get_people_boxes(prob, boxes):
-    box_list = []
-    for p, bbox in zip(prob, boxes):
-        cl = p.argmax()
-        object_type = f"{coco_id2label(cl.item())}"
-        if object_type == "person":
-            box_list.append(bbox)
-    return box_list
-
-
 def get_predictor(sagemaker_session) -> HuggingFacePredictor:
     image_serializer = DataSerializer(content_type="image/x-image")
 
@@ -72,8 +67,6 @@ if __name__ == "__main__":
     predictor = get_predictor(sagemaker_session)
 
     res = infer_image(image_path, predictor)
-
-    print(get_people_boxes(numpy.asarray(res["probabilities"]), res["bounding_boxes"]))
 
     image = PIL.Image.open(image_path)
     plot_results(image, numpy.asarray(res["probabilities"]), res["bounding_boxes"])

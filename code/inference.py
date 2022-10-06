@@ -1,3 +1,7 @@
+"""
+A custom inference script to use with YOLOS and SageMaker
+"""
+
 import torch
 from transformers import AutoFeatureExtractor, YolosForObjectDetection
 
